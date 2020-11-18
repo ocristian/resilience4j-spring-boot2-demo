@@ -1,11 +1,11 @@
 package io.github.robwin.service;
 
+import java.util.concurrent.CompletableFuture;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.util.concurrent.CompletableFuture;
-
-public interface Service {
+public interface Service
+{
     String failure();
 
     String failureWithFallback();

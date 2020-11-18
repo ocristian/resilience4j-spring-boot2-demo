@@ -1,8 +1,10 @@
 package io.github.robwin.exception;
 
-public class BusinessException extends RuntimeException {
+public class BusinessException extends RuntimeException
+{
 
-    public BusinessException(String message) {
+    public BusinessException(String message)
+    {
         super(message);
     }
 }

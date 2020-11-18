@@ -1,62 +1,73 @@
 package io.github.robwin;
 
+import io.vavr.collection.Stream;
+import org.junit.jupiter.api.Test;
+
 import static io.github.resilience4j.circuitbreaker.CircuitBreaker.State;
 
-import org.junit.Test;
+public class ReactiveCircuitBreakerTest extends AbstractCircuitBreakerTest
+{
 
-import io.vavr.collection.Stream;
+    @Test
+    public void shouldOpenBackendACircuitBreaker()
+    {
+        // When
+        Stream.rangeClosed(1, 2).forEach((count) -> produceFailure(BACKEND_A));
 
-public class ReactiveCircuitBreakerTest extends AbstractCircuitBreakerTest {
+        // Then
+        checkHealthStatus(BACKEND_A, State.OPEN);
+    }
 
-	@Test
-	public void shouldOpenBackendACircuitBreaker() {
-		// When
-		Stream.rangeClosed(1,2).forEach((count) -> produceFailure(BACKEND_A));
 
-		// Then
-		checkHealthStatus(BACKEND_A, State.OPEN);
-	}
+    @Test
+    public void shouldOpenBackendBCircuitBreaker()
+    {
+        // When
+        Stream.rangeClosed(1, 4).forEach((count) -> produceFailure(BACKEND_B));
 
-	@Test
-	public void shouldOpenBackendBCircuitBreaker() {
-		// When
-		Stream.rangeClosed(1,4).forEach((count) -> produceFailure(BACKEND_B));
+        // Then
+        checkHealthStatus(BACKEND_B, State.OPEN);
+    }
 
-		// Then
-		checkHealthStatus(BACKEND_B, State.OPEN);
-	}
 
-	@Test
-	public void shouldCloseBackendACircuitBreaker() {
-		transitionToOpenState(BACKEND_A);
-		circuitBreakerRegistry.circuitBreaker(BACKEND_A).transitionToHalfOpenState();
+    @Test
+    public void shouldCloseBackendACircuitBreaker()
+    {
+        transitionToOpenState(BACKEND_A);
+        circuitBreakerRegistry.circuitBreaker(BACKEND_A).transitionToHalfOpenState();
 
-		// When
-		Stream.rangeClosed(1,3).forEach((count) -> produceSuccess(BACKEND_A));
+        // When
+        Stream.rangeClosed(1, 3).forEach((count) -> produceSuccess(BACKEND_A));
 
-		// Then
-		checkHealthStatus(BACKEND_A, State.CLOSED);
-	}
+        // Then
+        checkHealthStatus(BACKEND_A, State.CLOSED);
+    }
 
-	@Test
-	public void shouldCloseBackendBCircuitBreaker() {
-		transitionToOpenState(BACKEND_B);
-		circuitBreakerRegistry.circuitBreaker(BACKEND_B).transitionToHalfOpenState();
 
-		// When
-		Stream.rangeClosed(1,3).forEach((count) -> produceSuccess(BACKEND_B));
+    @Test
+    public void shouldCloseBackendBCircuitBreaker()
+    {
+        transitionToOpenState(BACKEND_B);
+        circuitBreakerRegistry.circuitBreaker(BACKEND_B).transitionToHalfOpenState();
 
-		// Then
-		checkHealthStatus(BACKEND_B, State.CLOSED);
-	}
+        // When
+        Stream.rangeClosed(1, 3).forEach((count) -> produceSuccess(BACKEND_B));
 
-	private void produceFailure(String backend) {
-		webClient.get().uri("/" + backend + "/monoFailure").exchange().expectStatus()
-				.is5xxServerError();
-	}
+        // Then
+        checkHealthStatus(BACKEND_B, State.CLOSED);
+    }
 
-	private void produceSuccess(String backend) {
-		webClient.get().uri("/" + backend + "/monoSuccess").exchange().expectStatus()
-				.isOk();
-	}
+
+    private void produceFailure(String backend)
+    {
+        webClient.get().uri("/" + backend + "/monoFailure").exchange().expectStatus()
+            .is5xxServerError();
+    }
+
+
+    private void produceSuccess(String backend)
+    {
+        webClient.get().uri("/" + backend + "/monoSuccess").exchange().expectStatus()
+            .isOk();
+    }
 }

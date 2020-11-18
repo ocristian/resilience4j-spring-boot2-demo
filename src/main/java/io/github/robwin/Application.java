@@ -1,8 +1,6 @@
 package io.github.robwin;
 
-
 import java.net.URI;
-
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -14,15 +12,20 @@ import static org.springframework.web.reactive.function.server.RouterFunctions.r
 import static org.springframework.web.reactive.function.server.ServerResponse.permanentRedirect;
 
 @SpringBootApplication
-public class Application {
+public class Application
+{
 
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
         SpringApplication.run(Application.class, args);
     }
 
+
     @Bean
-    RouterFunction<ServerResponse> redirectRoot() {
-        return route(GET("/"),
-                req -> permanentRedirect(URI.create("/actuator")).build());
+    RouterFunction<ServerResponse> redirectRoot()
+    {
+        return route(
+            GET("/"),
+            req -> permanentRedirect(URI.create("/actuator")).build());
     }
 }

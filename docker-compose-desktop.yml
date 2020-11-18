@@ -4,22 +4,24 @@ services:
     image: prom/prometheus
     container_name: prometheus
     volumes:
-      - ./docker/prometheus-desktop.yml:/etc/prometheus/prometheus.yml
+      - ./docker/prometheus/prometheus-desktop.yml:/etc/prometheus/prometheus.yml
     ports:
       - "9090:9090"
     networks:
       - net
     depends_on:
       - app
+
   grafana:
-    image: grafana/grafana
+    build: './docker/grafana'
     container_name: grafana
     env_file:
-      - ./docker/grafana.env
+      - ./docker/grafana/grafana.env
     ports:
       - "3000:3000"
     networks:
       - net
+
   app:
   # build and start spring application inside a separate container using the same network as prometheus
     build: .

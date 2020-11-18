@@ -61,6 +61,7 @@ resilience4j.circuitbreaker:
             failureRateThreshold: 50
             eventConsumerBufferSize: 10
             recordFailurePredicate: io.github.robwin.exception.RecordFailurePredicate
+
 resilience4j.retry:
     configs:
         default:
@@ -77,6 +78,7 @@ resilience4j.retry:
             baseConfig: default
         backendB:
             baseConfig: default
+
 resilience4j.bulkhead:
     configs:
         default:
