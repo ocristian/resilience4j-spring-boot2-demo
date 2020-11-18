@@ -16,7 +16,7 @@ The [BackendBController](https://github.com/resilience4j/resilience4j-spring-boo
 Just run the Application.java in your IDE.  
 Application is running on http://localhost:9080.
 
-## Monitoring with Prometheus and Grafana (OPTIONAL)
+## Monitoring with Prometheus and Grafana
 
 ### Requirements
 [Docker](https://docs.docker.com/install/) and [Docker Compose](https://docs.docker.com/compose/install/) installed.
@@ -35,15 +35,11 @@ Check the Prometheus server.
 ### Step 3
 Configure the Grafana.
 - Open http://localhost:3000
-- **Configure integration with Prometheus**
-    - Access configuration
-    - Add data source
-    - Select Prometheus
-    - Use url "http://localhost:9090" and access with value "Browser"
-- **Configure dashboard**
-    - Access "home"
-    - Import dashboard
-    - Upload dashboard.json from /docker
+- Login as admin/admin
+- **Datasource and Dashboard**
+    - Uses Grafana provisioning on docker/grafana/provisioning/datasources and docker/grafana/provisioning/dashboards  
+- **Customizing dashboard**
+    - modify grafana-dashboard.json at docker/grafana/dashboards
 
 ## License
 
