@@ -16,8 +16,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 4,
-  "iteration": 1605651179279,
+  "iteration": 1605733633152,
   "links": [],
   "panels": [
     {
@@ -354,7 +353,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.2.1",
+      "pluginVersion": "7.3.3",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -365,8 +364,9 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "resilience4j_circuitbreaker_state{instance=\"$instance\"}",
+          "expr": "resilience4j_circuitbreaker_state{instance=\"app:9080\"}",
           "format": "time_series",
+          "interval": "",
           "intervalFactor": 1,
           "legendFormat": "{{ name }}: {{ state }}",
           "refId": "A"
@@ -382,6 +382,7 @@
         "sort": 0,
         "value_type": "individual"
       },
+      "transparent": true,
       "type": "graph",
       "xaxis": {
         "buckets": null,
@@ -512,10 +513,10 @@
         "lineColor": "rgb(31, 120, 193)",
         "show": true
       },
-      "tableColumn": "",
+      "tableColumn": "backendA",
       "targets": [
         {
-          "expr": "resilience4j_circuitbreaker_failure_rate{instance=\"$instance\",name=\"$circuitbreaker_name\"}",
+          "expr": "resilience4j_circuitbreaker_failure_rate{instance=\"app:9080\",name=\"$circuitbreaker_name\"}",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -528,6 +529,7 @@
       "timeFrom": null,
       "timeShift": null,
       "title": "Failure Rate: $circuitbreaker_name",
+      "transparent": true,
       "type": "singlestat",
       "valueFontSize": "80%",
       "valueMaps": [
@@ -591,7 +593,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.2.1",
+      "pluginVersion": "7.3.3",
       "pointradius": 2,
       "points": true,
       "renderer": "flot",
@@ -608,16 +610,18 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "rate(resilience4j_circuitbreaker_calls_seconds_count{instance=\"$instance\",name=\"$circuitbreaker_name\"}[1m])",
+          "expr": "rate(resilience4j_circuitbreaker_calls_seconds_count{instance=\"app:9080\",name=\"$circuitbreaker_name\"}[1m])",
           "format": "time_series",
           "hide": false,
+          "interval": "",
           "intervalFactor": 1,
           "legendFormat": "{{ kind }} ",
           "refId": "A"
         },
         {
-          "expr": "rate(resilience4j_circuitbreaker_calls_total{instance=\"$instance\",name=\"$circuitbreaker_name\"}[1m])",
+          "expr": "rate(resilience4j_circuitbreaker_calls_total{instance=\"app:9080\",name=\"$circuitbreaker_name\"}[1m])",
           "format": "time_series",
+          "interval": "",
           "intervalFactor": 1,
           "legendFormat": "{{ kind  }} ",
           "refId": "B"
@@ -633,6 +637,7 @@
         "sort": 0,
         "value_type": "individual"
       },
+      "transparent": true,
       "type": "graph",
       "xaxis": {
         "buckets": null,
@@ -710,7 +715,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.2.1",
+      "pluginVersion": "7.3.3",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -729,15 +734,17 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "resilience4j_circuitbreaker_buffered_calls{instance=\"$instance\",name=\"$circuitbreaker_name\"}",
+          "expr": "resilience4j_circuitbreaker_buffered_calls{instance=\"app:9080\",name=\"$circuitbreaker_name\"}",
           "format": "time_series",
+          "interval": "",
           "intervalFactor": 1,
           "legendFormat": "{{ kind }}",
           "refId": "A"
         },
         {
-          "expr": "resilience4j_circuitbreaker_max_buffered_calls{instance=\"$instance\",name=\"$circuitbreaker_name\"}",
+          "expr": "resilience4j_circuitbreaker_max_buffered_calls{instance=\"app:9080\",name=\"$circuitbreaker_name\"}",
           "format": "time_series",
+          "interval": "",
           "intervalFactor": 1,
           "legendFormat": "maximum",
           "refId": "B"
@@ -753,6 +760,7 @@
         "sort": 0,
         "value_type": "individual"
       },
+      "transparent": true,
       "type": "graph",
       "xaxis": {
         "buckets": null,
@@ -827,7 +835,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.2.1",
+      "pluginVersion": "7.3.3",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -844,30 +852,34 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "histogram_quantile(0.9, sum(rate(resilience4j_circuitbreaker_calls_seconds_bucket{application=\"$application\", instance=\"$instance\", name=\"$circuitbreaker_name\"}[1m])) by (le))",
+          "expr": "histogram_quantile(0.9, sum(rate(resilience4j_circuitbreaker_calls_seconds_bucket{application=\"$application\", instance=\"app:9080\", name=\"$circuitbreaker_name\"}[1m])) by (le))",
           "format": "time_series",
           "hide": false,
+          "interval": "",
           "intervalFactor": 1,
           "legendFormat": "90th Percentile",
           "refId": "A"
         },
         {
-          "expr": "histogram_quantile(0.95, sum(rate(resilience4j_circuitbreaker_calls_seconds_bucket{application=\"$application\", instance=\"$instance\", name=\"$circuitbreaker_name\"}[1m])) by (le))",
+          "expr": "histogram_quantile(0.95, sum(rate(resilience4j_circuitbreaker_calls_seconds_bucket{application=\"$application\", instance=\"app:9080\", name=\"$circuitbreaker_name\"}[1m])) by (le))",
           "format": "time_series",
+          "interval": "",
           "intervalFactor": 1,
           "legendFormat": "95th Percentile",
           "refId": "B"
         },
         {
-          "expr": "histogram_quantile(0.98, sum(rate(resilience4j_circuitbreaker_calls_seconds_bucket{application=\"$application\", instance=\"$instance\", name=\"$circuitbreaker_name\"}[1m])) by (le))",
+          "expr": "histogram_quantile(0.98, sum(rate(resilience4j_circuitbreaker_calls_seconds_bucket{application=\"$application\", instance=\"app:9080\", name=\"$circuitbreaker_name\"}[1m])) by (le))",
           "format": "time_series",
+          "interval": "",
           "intervalFactor": 1,
           "legendFormat": "98th Percentile",
           "refId": "C"
         },
         {
-          "expr": "histogram_quantile(0.50, sum(rate(resilience4j_circuitbreaker_calls_seconds_bucket{application=\"$application\", instance=\"$instance\", name=\"$circuitbreaker_name\"}[1m])) by (le))",
+          "expr": "histogram_quantile(0.50, sum(rate(resilience4j_circuitbreaker_calls_seconds_bucket{application=\"$application\", instance=\"app:9080\", name=\"$circuitbreaker_name\"}[1m])) by (le))",
           "format": "time_series",
+          "interval": "",
           "intervalFactor": 1,
           "legendFormat": "Median",
           "refId": "D"
@@ -883,6 +895,7 @@
         "sort": 0,
         "value_type": "individual"
       },
+      "transparent": true,
       "type": "graph",
       "xaxis": {
         "buckets": null,
@@ -960,7 +973,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.2.1",
+      "pluginVersion": "7.3.3",
       "pointradius": 2,
       "points": true,
       "renderer": "flot",
@@ -977,15 +990,17 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "increase(resilience4j_circuitbreaker_calls_seconds_sum{instance=\"$instance\",name=\"$circuitbreaker_name\"}[1m]) / increase(resilience4j_circuitbreaker_calls_seconds_count{instance=\"$instance\",name=\"$circuitbreaker_name\"}[1m])",
+          "expr": "increase(resilience4j_circuitbreaker_calls_seconds_sum{instance=\"app:9080\",name=\"$circuitbreaker_name\"}[1m]) / increase(resilience4j_circuitbreaker_calls_seconds_count{instance=\"app:9080\",name=\"$circuitbreaker_name\"}[1m])",
           "format": "time_series",
+          "interval": "",
           "intervalFactor": 1,
           "legendFormat": "{{ kind }}",
           "refId": "A"
         },
         {
-          "expr": "sum(increase(resilience4j_circuitbreaker_calls_seconds_sum{instance=\"$instance\",name=\"$circuitbreaker_name\"}[1m])) / sum(increase(resilience4j_circuitbreaker_calls_seconds_count{instance=\"$instance\",name=\"$circuitbreaker_name\"}[1m]))",
+          "expr": "sum(increase(resilience4j_circuitbreaker_calls_seconds_sum{instance=\"app:9080\",name=\"$circuitbreaker_name\"}[1m])) / sum(increase(resilience4j_circuitbreaker_calls_seconds_count{instance=\"app:9080\",name=\"$circuitbreaker_name\"}[1m]))",
           "format": "time_series",
+          "interval": "",
           "intervalFactor": 1,
           "legendFormat": "total ",
           "refId": "B"
@@ -1001,6 +1016,7 @@
         "sort": 0,
         "value_type": "individual"
       },
+      "transparent": true,
       "type": "graph",
       "xaxis": {
         "buckets": null,
@@ -1093,7 +1109,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.2.1",
+      "pluginVersion": "7.3.3",
       "pointradius": 2,
       "points": true,
       "renderer": "flot",
@@ -1105,6 +1121,7 @@
         {
           "expr": "rate(resilience4j_retry_calls{application=\"$application\",name=\"$retry_name\",}[1m])",
           "format": "time_series",
+          "interval": "",
           "intervalFactor": 1,
           "legendFormat": "{{ kind }}",
           "refId": "A"
@@ -1120,6 +1137,7 @@
         "sort": 0,
         "value_type": "individual"
       },
+      "transparent": true,
       "type": "graph",
       "xaxis": {
         "buckets": null,
@@ -1214,7 +1232,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.2.1",
+      "pluginVersion": "7.3.3",
       "pointradius": 2,
       "points": true,
       "renderer": "flot",
@@ -1255,6 +1273,7 @@
         "sort": 0,
         "value_type": "individual"
       },
+      "transparent": true,
       "type": "graph",
       "xaxis": {
         "buckets": null,
@@ -1302,6 +1321,7 @@
         },
         "datasource": "Prometheus",
         "definition": "label_values(application)",
+        "error": null,
         "hide": 0,
         "includeAll": false,
         "label": "Application",
@@ -1333,6 +1353,7 @@
         },
         "datasource": "Prometheus",
         "definition": "label_values(resilience4j_circuitbreaker_state, instance)",
+        "error": null,
         "hide": 0,
         "includeAll": true,
         "label": "Instance",
@@ -1365,6 +1386,7 @@
         "allValue": null,
         "current": {
           "selected": true,
+          "tags": [],
           "text": [
             "backendA"
           ],
@@ -1374,6 +1396,7 @@
         },
         "datasource": "Prometheus",
         "definition": "label_values(resilience4j_circuitbreaker_state, name)",
+        "error": null,
         "hide": 0,
         "includeAll": false,
         "label": "CircuitBreaker Name",
@@ -1400,6 +1423,7 @@
         },
         "datasource": "Prometheus",
         "definition": "label_values(resilience4j_retry_calls, name)",
+        "error": null,
         "hide": 0,
         "includeAll": true,
         "label": "Retry Name",
@@ -1430,6 +1454,7 @@
         },
         "datasource": "Prometheus",
         "definition": "label_values(resilience4j_bulkhead_available_concurrent_calls, name)",
+        "error": null,
         "hide": 0,
         "includeAll": true,
         "label": "Bulkead Name",
@@ -1481,5 +1506,5 @@
   "timezone": "",
   "title": "Resilience4j",
   "uid": "DshZ5zmWk",
-  "version": 2
+  "version": 1
 }
