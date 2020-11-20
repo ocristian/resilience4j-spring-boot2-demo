@@ -42,20 +42,20 @@ public class BackendAService implements Service
 
 
     @Override
-    @CircuitBreaker(name = BACKEND_A, fallbackMethod = "fallback")
-    public String failureWithFallback()
-    {
-        return failure();
-    }
-
-
-    @Override
     @CircuitBreaker(name = BACKEND_A)
     @Bulkhead(name = BACKEND_A)
     @Retry(name = BACKEND_A)
     public String success()
     {
-        return "Hello World from backend A";
+        return "All good from backend A\n";
+    }
+
+
+    @Override
+    @CircuitBreaker(name = BACKEND_A, fallbackMethod = "fallback")
+    public String failureWithFallback()
+    {
+        return failure();
     }
 
 
@@ -83,7 +83,7 @@ public class BackendAService implements Service
     @Retry(name = BACKEND_A)
     public Flux<String> fluxSuccess()
     {
-        return Flux.just("Hello", "World");
+        return Flux.just("All good from backend A");
     }
 
 

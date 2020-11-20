@@ -99,9 +99,7 @@ public class BackendCService implements Service
     @CircuitBreaker(name = BACKEND_C, fallbackMethod = "fluxFallback")
     public Flux<String> fluxTimeout()
     {
-        return Flux.
-            just("Hello World from backend A")
-            .delayElements(Duration.ofSeconds(10));
+        return Flux.just("Hello World from backend A").delayElements(Duration.ofSeconds(10));
     }
 
 

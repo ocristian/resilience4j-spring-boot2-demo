@@ -22,18 +22,16 @@ management.metrics.tags.application: ${spring.application.name}
 management.metrics.distribution.percentiles-histogram.http.server.requests: true
 management.metrics.distribution.percentiles-histogram.resilience4j.circuitbreaker.calls: true
 
-#resilience4j.circuitbreaker.metrics.use_legacy_binder: true
-
 resilience4j.circuitbreaker:
     configs:
         default:
             registerHealthIndicator: true
             slidingWindowSize: 10
             minimumNumberOfCalls: 5
-            permittedNumberOfCallsInHalfOpenState: 3
-            automaticTransitionFromOpenToHalfOpenEnabled: true
-            waitDurationInOpenState: 5s
             failureRateThreshold: 50
+            waitDurationInOpenState: 5s
+            automaticTransitionFromOpenToHalfOpenEnabled: true
+            permittedNumberOfCallsInHalfOpenState: 3
             eventConsumerBufferSize: 10
             recordExceptions:
                 - org.springframework.web.client.HttpServerErrorException
@@ -85,7 +83,7 @@ resilience4j.bulkhead:
             maxConcurrentCalls: 100
     instances:
         backendA:
-            maxConcurrentCalls: 10
+            maxConcurrentCalls: 5
         backendB:
             maxWaitDuration: 10ms
             maxConcurrentCalls: 20
@@ -119,7 +117,7 @@ resilience4j.ratelimiter:
             limitForPeriod: 6
             limitRefreshPeriod: 500ms
             timeoutDuration: 3s
-            
+
 resilience4j.timelimiter:
     configs:
         default:

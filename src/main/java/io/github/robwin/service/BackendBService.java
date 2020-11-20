@@ -73,8 +73,7 @@ public class BackendBService implements Service
     @Override
     public Flux<String> fluxTimeout()
     {
-        return Flux.just("Hello World from backend B")
-            .delayElements(Duration.ofSeconds(10));
+        return Flux.just("Hello World from backend B").delayElements(Duration.ofSeconds(10));
     }
 
 
@@ -95,8 +94,7 @@ public class BackendBService implements Service
     @Override
     public Mono<String> monoTimeout()
     {
-        return Mono.just("Hello World from backend B")
-            .delayElement(Duration.ofSeconds(10));
+        return Mono.just("Hello World from backend B").delayElement(Duration.ofSeconds(10));
     }
 
 
